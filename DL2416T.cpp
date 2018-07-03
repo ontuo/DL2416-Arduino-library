@@ -33,6 +33,8 @@ Display::Display(uint8_t nD0, uint8_t nD1, uint8_t nD2, uint8_t nD3, uint8_t nD4
 void Display::Print(String word, int time_delay)
 {
     clear();
+    digitalWrite(CUE, 0);
+    digitalWrite(CU, 1);
     int len = 0;
     if (word.length() > 4)
     {
@@ -60,16 +62,7 @@ void Display::setAdress(int position)
     digitalWrite(Ad0, (position & 0b01) >> 0);
 }
 
-void Display::setCursor(int position)
-{
-    removeCursor();
-    setAdress(position);
-    digitalWrite(WR, 0);
-    digitalWrite(D0, 1);
-    digitalWrite(CUE, 1);
-    digitalWrite(CU, 0);
-    digitalWrite(WR, 1);
-}
+
 
 void Display::setLetter(char letter, int position, int time_delay)
 {
@@ -85,33 +78,6 @@ void Display::setLetter(char letter, int position, int time_delay)
 
     digitalWrite(WR, 0);
     delay(time_delay);
-    digitalWrite(WR, 1);
-}
-
-void Display::hideCursor()
-{
-    digitalWrite(CUE, 0);
-    digitalWrite(WR, 1);
-    digitalWrite(CLR, 1);
-}
-
-void Display::showCursor()
-{
-    digitalWrite(CUE, 1);
-}
-
-void Display::removeCursor()
-{
-    digitalWrite(WR, 0);
-
-    pinMode(D0, 0);
-    int value = digitalRead(D0);
-    pinMode(D0, 1);
-
-    digitalWrite(D0, 0);
-    digitalWrite(CUE, 1);
-    digitalWrite(CU, 1);
-    digitalWrite(D0, value);
     digitalWrite(WR, 1);
 }
 
@@ -132,4 +98,3 @@ void Display::turnOn()
 }
 
 Display::~Display() {}
-

@@ -12,11 +12,7 @@ public:
   ~Display();
   void Print(String word, int time_delay);
   void setAdress(int position);
-  void setCursor(int position);
   void setLetter(char letter, int position,int time_delay);
-  void removeCursor();
-  void showCursor();
-  void hideCursor();
   void clear();
   void turnOff();
   void turnOn();
