@@ -30,16 +30,28 @@ Display::Display(uint8_t nD0, uint8_t nD1, uint8_t nD2, uint8_t nD3, uint8_t nD4
     digitalWrite(CU, 1);
 }
 
-void Display::Print(String word)
+void Display::Print(String word, int time_delay)
 {
-    digitalWrite(CU, 1);
-    int n = 3;
-    for (int i = 0; i < word.length(); i++)
+    clear();
+    int len = 0;
+    if (word.length() > 4)
     {
-        //number = 3 - i;
-        n = n - i;
-        setLetter(word[i], n);
+        len = 4;
     }
+    else
+    {
+        len = word.length();
+    }
+    Serial.println(word);
+    for (int i = 0; i < len; i++)
+    {
+        Serial.print(i);
+        int m = len - 1 - i;
+        Serial.print("-");
+        Serial.println(m);
+        setLetter(word[i], m, time_delay);
+    }
+    delay(100);
 }
 
 void Display::setAdress(int position)
@@ -59,7 +71,7 @@ void Display::setCursor(int position)
     digitalWrite(WR, 1);
 }
 
-void Display::setLetter(char letter, int position)
+void Display::setLetter(char letter, int position, int time_delay)
 {
     setAdress(position);
 
@@ -72,6 +84,7 @@ void Display::setLetter(char letter, int position)
     digitalWrite(D0, (letter & 0b0000001) >> 0);
 
     digitalWrite(WR, 0);
+    delay(time_delay);
     digitalWrite(WR, 1);
 }
 
@@ -102,13 +115,21 @@ void Display::removeCursor()
     digitalWrite(WR, 1);
 }
 
-void Display::clear(){
+void Display::clear()
+{
     digitalWrite(CLR, 0);
     digitalWrite(CLR, 1);
 }
 
-void Display::dim(){
+void Display::turnOff()
+{
+    digitalWrite(BL, 0);
+}
+
+void Display::turnOn()
+{
     digitalWrite(BL, 1);
 }
 
+Display::~Display() {}
 
