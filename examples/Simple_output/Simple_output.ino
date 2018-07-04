@@ -11,6 +11,6 @@ String test = "HI!!";
 
 void loop()
 {
-  display.Print(test);
+  display.Print(test,1000);
   delay(5000);
 }
