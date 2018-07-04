@@ -21,7 +21,8 @@ display.clear();    //Clear the display.
 
 display.turnOff(); //You can turn off or on the screen (without deleting data).
 display.turnOn();
-display.setLetter(char letter, int position); //Output one letter to the desired position. Note that the positions on the display are numbered from the right to the left from 3 to 0.
+display.setLetter(char letter, int position); //Output one letter to the desired position.
+                                              //Note that the positions on the display are numbered from the right to the left from 3 to 0.
 ```
 
 
