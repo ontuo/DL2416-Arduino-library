@@ -15,14 +15,16 @@ Display display (D0, D1, D2, D3, D4, D5, D6,
 **Functions**
 
 ```
-display.Print(String word);     //Print a word.Remember that only 4 or fewer letters can be displayed.
+display.Print(String word);     //Print a word.Remember that only 4 
+                                //or fewer letters can be displayed.
 
 display.clear();    //Clear the display.
 
 display.turnOff(); //You can turn off or on the screen (without deleting data).
 display.turnOn();
 display.setLetter(char letter, int position); //Output one letter to the desired position.
-                                              //Note that the positions on the display are numbered from the right to the left from 3 to 0.
+                                              //Note that the positions on the display are 
+                                              //numbered from the right to the left from 3 to 0.
 ```
 
 
