@@ -6,6 +6,7 @@ Display::Display(uint8_t nD0, uint8_t nD1, uint8_t nD2, uint8_t nD3, uint8_t nD4
     : D0(nD0), D1(nD1), D2(nD2), D3(nD3), D4(nD4), D5(nD5), D6(nD6), Ad0(nAd0), Ad1(nAd1),
       WR(nWR), CU(nCU), CUE(nCUE), CLR(nCLR), BL(nBL)
 {
+    // Set pins as outputs
     pinMode(D0, 1);
     pinMode(D1, 1);
     pinMode(D2, 1);
@@ -20,7 +21,7 @@ Display::Display(uint8_t nD0, uint8_t nD1, uint8_t nD2, uint8_t nD3, uint8_t nD4
     pinMode(Ad0, 1);
     pinMode(Ad1, 1);
 
-    digitalWrite(WR, 1);
+    digitalWrite(WR, 1); 
     digitalWrite(Ad0, 1);
     digitalWrite(Ad1, 1);
 
@@ -30,11 +31,17 @@ Display::Display(uint8_t nD0, uint8_t nD1, uint8_t nD2, uint8_t nD3, uint8_t nD4
     digitalWrite(CU, 1);
 }
 
-void Display::Print(String word, int time_delay)
+void Display::setAdress(int position)
 {
-    clear();
-    digitalWrite(CUE, 0);
-    digitalWrite(CU, 1);
+    digitalWrite(Ad1, (position & 0b10) >> 1);
+    digitalWrite(Ad0, (position & 0b01) >> 0);
+}
+
+//for users:
+
+//Only the first 4 (or less) letters will be printed
+void Display::Print(String word)
+{
     int len = 0;
     if (word.length() > 4)
     {
@@ -44,27 +51,15 @@ void Display::Print(String word, int time_delay)
     {
         len = word.length();
     }
-    Serial.println(word);
     for (int i = 0; i < len; i++)
     {
-        Serial.print(i);
         int m = len - 1 - i;
-        Serial.print("-");
-        Serial.println(m);
-        setLetter(word[i], m, time_delay);
+        setLetter(word[i], m);
     }
-    delay(100);
 }
 
-void Display::setAdress(int position)
-{
-    digitalWrite(Ad1, (position & 0b10) >> 1);
-    digitalWrite(Ad0, (position & 0b01) >> 0);
-}
-
-
-
-void Display::setLetter(char letter, int position, int time_delay)
+//will output the letter in the determined position
+void Display::setLetter(char letter, int position)
 {
     setAdress(position);
 
@@ -77,15 +72,19 @@ void Display::setLetter(char letter, int position, int time_delay)
     digitalWrite(D0, (letter & 0b0000001) >> 0);
 
     digitalWrite(WR, 0);
-    delay(time_delay);
     digitalWrite(WR, 1);
 }
 
+//this command will clear all the internal four-digit memory
 void Display::clear()
 {
     digitalWrite(CLR, 0);
+    //according to datasheet we need at least 1 sec to clear 
+    delay(1000);
     digitalWrite(CLR, 1);
 }
+
+//turnOff will not delete anything, only dim the display
 
 void Display::turnOff()
 {
@@ -96,5 +95,3 @@ void Display::turnOn()
 {
     digitalWrite(BL, 1);
 }
-
-Display::~Display() {}

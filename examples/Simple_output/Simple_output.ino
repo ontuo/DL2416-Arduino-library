@@ -1,16 +1,14 @@
 #include "DL2416T.h"
 
+// Set up the pins
 Display display(A1, A0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
 
 void setup()
 {
-  Serial.begin(9600);
+  //Print a message 
+  display.Print("HI!!");
 }
-
-String test = "HI!!";
 
 void loop()
 {
-  display.Print(test,1000);
-  delay(5000);
 }
