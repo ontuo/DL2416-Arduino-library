@@ -5,33 +5,25 @@
 **Beginning**
 
 Creating a new object:
-    Display display (D0, D1, D2, D3, D4, D5, D6, 
-                    A0, A1, WR, CU, CUE, CLR, BL);
+```
+Display display (D0, D1, D2, D3, D4, D5, D6, 
+                A0, A1, WR, CU, CUE, CLR, BL);
+```
 
 (Replace D0 ... BL with the corresponding pin numbers ).
 
 **Functions**
 
-You can print a word by using:
 ```
- display.Print(String word);
-```
-Remember that only 4 or fewer letters can be displayed.
+display.Print(String word);     //Print a word.Remember that only 4 or fewer letters can be displayed.
 
-You can clear the display by using:
-   ```
-    display.clear();
+display.clear();    //Clear the display.
+
+display.turnOff(); //You can turn off or on the screen (without deleting data).
+display.turnOn();
+display.setLetter(char letter, int position); //Output one letter to the desired position. Note that the positions on the display are numbered from the right to the left from 3 to 0.
 ```
-You can turn off or on the screen (without deleting data) by using:
-   ```
-    display.turnOff();
-    display.turnOn();
-```
-You can output one letter to the desired position by using:
-   ```
-    display.setLetter(char letter, int position);
-```
-Note that the positions on the display are numbered from the right to the left from 3 to 0.
+
 
 ### Datasheet
 
