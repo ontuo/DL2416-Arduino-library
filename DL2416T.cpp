@@ -17,6 +17,7 @@ Display::Display(uint8_t nD0, uint8_t nD1, uint8_t nD2, uint8_t nD3, uint8_t nD4
     pinMode(WR, 1);
     pinMode(CLR, 1);
     pinMode(CU, 1);
+    pinMode(CUE, 1);
     pinMode(BL, 1);
     pinMode(Ad0, 1);
     pinMode(Ad1, 1);
